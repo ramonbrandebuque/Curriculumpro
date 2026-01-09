@@ -35,7 +35,7 @@ const translations = {
     linkedinIntegration: 'LinkedIn Otimizado',
     scoreDetails: 'Detalhamento da Nota',
     share: 'Compartilhar',
-    shareMessage: 'Consegui um score de {score} para a vaga de {job} no CV Master! Otimize seu currículo também: {url}',
+    shareMessage: 'Consegui um score de {score} para a vaga de {job} no ResumeCVPro! Otimize seu currículo também: {url}',
     hoverInstruction: 'PASSE O MOUSE PARA DETALHES',
     viewDetails: 'Ver Detalhes da Nota',
     backToSummary: 'Voltar ao Resumo',
@@ -58,7 +58,7 @@ const translations = {
     linkedinIntegration: 'LinkedIn Optimized',
     scoreDetails: 'Score Breakdown',
     share: 'Share',
-    shareMessage: 'I scored {score} for the {job} position on CV Master! Optimize your resume too: {url}',
+    shareMessage: 'I scored {score} for the {job} position on ResumeCVPro! Optimize your resume too: {url}',
     hoverInstruction: 'HOVER FOR DETAILS',
     viewDetails: 'View Score Details',
     backToSummary: 'Back to Summary',
@@ -150,7 +150,7 @@ export default function App() {
     cvData: null,
     analysis: null,
     downloadCount: 0,
-    isPaid: true // Todas as funcionalidades liberadas
+    isPaid: true
   });
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -179,7 +179,7 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem('cv_master_history');
+    const savedHistory = localStorage.getItem('resume_cv_pro_history');
     if (savedHistory) setHistory(JSON.parse(savedHistory));
   }, []);
 
@@ -202,7 +202,6 @@ export default function App() {
     if (!file) return;
     setError(null);
     setLoading(true);
-    // Simulação básica de leitura de arquivo (em um app real usaria PDF.js ou similar)
     const reader = new FileReader();
     reader.onload = (event) => {
       setTempText(event.target?.result as string || '');
@@ -232,7 +231,7 @@ export default function App() {
       };
       const updatedHistory = [newItem, ...history].slice(0, 50); 
       setHistory(updatedHistory);
-      localStorage.setItem('cv_master_history', JSON.stringify(updatedHistory));
+      localStorage.setItem('resume_cv_pro_history', JSON.stringify(updatedHistory));
       setState(prev => ({ ...prev, step: 'result', cvData: { content: tempText, targetJob: jobDescription, jobUrl }, analysis: result }));
       setResultSubView('summary');
     } catch (err: any) {
@@ -263,7 +262,7 @@ export default function App() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `CV_Otimizado.${selectedFormat}`;
+    a.download = `ResumeCVPro_Otimizado.${selectedFormat}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -279,7 +278,7 @@ export default function App() {
       
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'CV Master', text: text, url: window.location.origin });
+        await navigator.share({ title: 'ResumeCVPro', text: text, url: window.location.origin });
       } catch (e) {
         console.error("Error sharing", e);
       }
@@ -297,7 +296,7 @@ export default function App() {
       <nav className={`px-6 py-4 flex items-center justify-between sticky top-0 z-50 border-b transition-colors ${theme === 'dark' ? 'bg-gray-900/80 border-gray-800 backdrop-blur-md' : 'bg-white/80 border-gray-200 backdrop-blur-md'}`}>
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('tool')}>
           <div className="bg-blue-600 p-2 rounded-lg"><Cpu className="text-white w-6 h-6" /></div>
-          <span className="text-xl font-black tracking-tight">CV<span className="text-blue-600">Master</span></span>
+          <span className="text-xl font-black tracking-tight">ResumeCV<span className="text-blue-600">Pro</span></span>
         </div>
         <div className="hidden md:flex items-center gap-8">
           <button onClick={() => setView('tool')} className={`text-sm font-bold ${view === 'tool' ? 'text-blue-600' : 'opacity-60 hover:opacity-100'}`}>{t.navOptimizer}</button>
@@ -636,7 +635,7 @@ export default function App() {
                            <div className="flex items-center justify-between px-4">
                              <div>
                                <h5 className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">{t.optimized}</h5>
-                               <p className="text-xs font-black mt-1">Versão IA CV Master</p>
+                               <p className="text-xs font-black mt-1">Versão IA ResumeCVPro</p>
                              </div>
                              <span className="text-[9px] font-black text-green-600 bg-green-600/10 px-4 py-1.5 rounded-full border border-green-600/10 flex items-center gap-1"><Sparkles size={10}/> ADIÇÕES</span>
                            </div>
@@ -738,7 +737,7 @@ function HistoryPage({ history, onSelect, onDelete, theme }: any) {
       {history.length === 0 ? <div className="text-center py-24 opacity-30 italic font-bold">Nenhum registro encontrado ainda.</div> : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {history.map((h: any) => (
-            <div key={h.id} className={`p-8 rounded-[2.5rem] border group transition-all hover:scale-105 hover:shadow-2xl ${theme === 'dark' ? 'bg-gray-900 border-gray-800 hover:border-blue-600/30' : 'bg-white border-gray-100 shadow-xl shadow-slate-200/40'}`}>
+            <div key={h.id} className={`p-8 rounded-[2.5rem] border group transition-all hover:scale-105 hover:shadow-2xl ${theme === 'dark' ? 'bg-gray-900 border-gray-900 hover:border-blue-600/30' : 'bg-white border-gray-100 shadow-xl shadow-slate-200/40'}`}>
                <div className="mb-8">
                  <div className="text-[10px] font-black opacity-30 mb-3 uppercase tracking-widest flex items-center justify-between">
                    {h.date}
