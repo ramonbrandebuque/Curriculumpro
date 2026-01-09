@@ -1,0 +1,7 @@
+{
+  "name": "CV Master: Otimizador de Currículos AI",
+  "description": "Uma plataforma avançada que utiliza a inteligência artificial do Gemini para analisar, pontuar e otimizar currículos para vagas específicas, garantindo que você se destaque nos sistemas de rastreamento de candidatos (ATS).",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
